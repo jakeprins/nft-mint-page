@@ -17,7 +17,7 @@ const IndexPage: NextPage = () => {
   const { addToast } = useToast()
 
   const checkIfWalletIsConnected = async () => {
-    const { ethereum } = window
+    const { ethereum } = window as any
 
     if (!ethereum) {
       console.log('Make sure you have metamask!')
@@ -46,7 +46,7 @@ const IndexPage: NextPage = () => {
    */
   const connectWallet = async () => {
     try {
-      const { ethereum } = window
+      const { ethereum } = window as any
 
       if (!ethereum) {
         alert('Get MetaMask!')
@@ -77,7 +77,7 @@ const IndexPage: NextPage = () => {
   const setupEventListener = async () => {
     // Most of this looks the same as our function askContractToMintNft
     try {
-      const { ethereum } = window
+      const { ethereum } = window as any
 
       if (ethereum) {
         // Same stuff again
@@ -106,7 +106,7 @@ const IndexPage: NextPage = () => {
 
   const askContractToMintNft = async () => {
     try {
-      const { ethereum } = window
+      const { ethereum } = window as any
 
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum)
@@ -114,7 +114,7 @@ const IndexPage: NextPage = () => {
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer)
 
         console.log('Going to pop wallet now to pay gas...')
-        let nftTxn = await connectedContract.makeAnEpicNFT()
+        const nftTxn = await connectedContract.makeAnEpicNFT()
         setIsMinting(true)
         addToast({
           title: 'Mining... please wait.',
@@ -141,7 +141,7 @@ const IndexPage: NextPage = () => {
 
   const setUpSupply = async () => {
     try {
-      const { ethereum } = window
+      const { ethereum } = window as any
 
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum)
@@ -167,7 +167,7 @@ const IndexPage: NextPage = () => {
   const setupNetworkListener = async () => {
     // Most of this looks the same as our function askContractToMintNft
     try {
-      const { ethereum } = window
+      const { ethereum } = window as any
 
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum)
@@ -180,7 +180,7 @@ const IndexPage: NextPage = () => {
           console.log('oldNetwork', oldNetwork)
 
           if (oldNetwork) {
-            window.location.reload()
+            window.location.reload() as any
             return
           }
           if (newNetwork?.chainId !== 4) {
@@ -199,30 +199,30 @@ const IndexPage: NextPage = () => {
     }
   }
 
-  const checkNetwork = async () => {
-    try {
-      const { ethereum } = window
+  // const checkNetwork = async () => {
+  //   try {
+  //     const { ethereum } = window as any
 
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum)
-        const { chainId } = await provider.getNetwork()
-        console.log(chainId) // 42
+  //     if (ethereum) {
+  //       const provider = new ethers.providers.Web3Provider(ethereum)
+  //       const { chainId } = await provider.getNetwork()
+  //       console.log(chainId) // 42
 
-        if (chainId !== 4) {
-          addToast({
-            title: 'Wrong Network!',
-            description: 'Please switch to Rinkeby',
-            type: 'warning',
-            id: 1
-          })
-        }
-      } else {
-        console.log("Ethereum object doesn't exist!")
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  //       if (chainId !== 4) {
+  //         addToast({
+  //           title: 'Wrong Network!',
+  //           description: 'Please switch to Rinkeby',
+  //           type: 'warning',
+  //           id: 1
+  //         })
+  //       }
+  //     } else {
+  //       console.log("Ethereum object doesn't exist!")
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   useEffect(() => {
     checkIfWalletIsConnected()
@@ -268,7 +268,10 @@ const IndexPage: NextPage = () => {
   }
 
   return (
-    <Layout title="Home | Next Starter Kit">
+    <Layout
+      title="Mint page"
+      favicon="https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.svg"
+    >
       <div className="absolute bottom-5 right-5">
         <div className="flex">
           <a
