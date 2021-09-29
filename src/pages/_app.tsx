@@ -1,7 +1,12 @@
 import 'styles/tailwind.css'
 
 import { AppProps } from 'next/app'
+import { ToastProvider } from '@apideck/components'
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
-  return <Component {...pageProps} />
+  return (
+    <ToastProvider>
+      <Component {...pageProps} />
+    </ToastProvider>
+  )
 }
